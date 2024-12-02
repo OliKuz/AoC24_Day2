@@ -6,7 +6,7 @@
 # make total count of good reports
 
 def main():
-    input_file = open("input.txt", "r")
+    input_file = open("input_xs.txt", "r")
 
     num_valid = 0
 
@@ -19,6 +19,9 @@ def main():
 
         if check_report(report):
             num_valid += 1
+        else:
+            if try_fixing(report):
+                num_valid += 1
     
     print("Number of valid reports: ", num_valid)
 
@@ -43,6 +46,19 @@ def check_report(report):
         
     return True
 
+def try_fixing(report):
+
+    # remove pop each element and check if the report is valid now
+    # return the elemnt after done cheking and remove the next one if the report is still invalid
+    
+    for i in range(0, len(report)):
+        temp = report.pop(i)
+        if check_report(report):
+            print("Fixed report: ", report)
+            return True
+        report.insert(i, temp)
+    
+    return False
 
 if __name__ == "__main__":   
     main()
